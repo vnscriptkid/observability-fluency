@@ -1,0 +1,10 @@
+groups:
+  - name: app
+    rules:
+      - alert: HighErrorRate
+        expr: sum(increase(http_requests_total{status=~"5.."}[1m])) > 5
+        labels:
+          severity: page
+        annotations:
+          summary: High request error rate
+          description: '{{ $labels.instance }} has a request error increase '

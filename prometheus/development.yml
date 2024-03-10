@@ -1,5 +1,6 @@
 global:
   scrape_interval: 15s
+  evaluation_interval: 15s
 
 scrape_configs:
   - job_name: app
@@ -10,3 +11,12 @@ scrape_configs:
       # endpoints to scrape
       - targets:
           - host.docker.internal:8080 # server running on host machine, but prometheus running inside docker container
+
+rule_files:
+  - alerts.yml
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - host.docker.internal:9093
